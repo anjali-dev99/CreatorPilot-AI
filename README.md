@@ -129,62 +129,9 @@ Planned Capabilities
 Planned capabilities are not yet fully implemented.
 
 🏗️ System Architecture
+## 🏗️ System Architecture
 
-The following diagram illustrates the high-level architecture of CreatorPilot AI and the interaction between the frontend, backend, and AI service.
-
-flowchart TB
-    U["USER"]
-
-    subgraph FE["FRONTEND - React + TypeScript"]
-        APP["App.tsx / Main Application"]
-        CP["Content Creation Page"]
-        TS["Thumbnail Studio Page"]
-
-        CP --> B1["Generate Content Button"]
-        CP --> B2["Language / Tone / Platform Selectors"]
-        CP --> B3["Copy / Download Actions"]
-
-        TS --> B4["Select Thumbnail"]
-        TS --> B5["Apply Suggested Headline"]
-        TS --> B6["Run Diagnostics"]
-        TS --> B7["Download Thumbnail"]
-    end
-
-    subgraph BE["BACKEND - FastAPI"]
-        MAIN["app/main.py"]
-        ROUTE["content_routes.py"]
-        SCHEMA["ContentRequest"]
-        SERVICE["GeminiService"]
-        RESPONSE["ContentResponse"]
-    end
-
-    AI["Google Gemini API"]
-
-    U --> APP
-    APP --> CP
-    APP --> TS
-
-    B1 --> ROUTE
-    B2 --> B1
-    ROUTE --> SCHEMA
-    SCHEMA --> SERVICE
-    SERVICE --> AI
-    AI --> SERVICE
-    SERVICE --> RESPONSE
-    RESPONSE --> CP
-
-    B3 --> CP
-
-    B4 --> TS
-    B5 --> TS
-    B6 --> TS
-    B7 --> TS
-
-    MAIN --> ROUTE
-
-    style AI fill:#EDE9FE,stroke:#7C3AED,color:#4C1D95
-    style SERVICE fill:#EDE9FE,stroke:#7C3AED,color:#4C1D95
-    style TS fill:#FEF3C7,stroke:#D97706,color:#78350F
+![CreatorPilot AI System Architecture](assets/system-architecture.png)
 
 🛠️ Tech Stack
 
