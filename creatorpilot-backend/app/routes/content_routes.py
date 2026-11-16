@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from app.schemas.content import ContentRequest
 from app.schemas.response import ContentResponse
 from app.services.gemini_service import GeminiService
+import re
 
 router = APIRouter(
     prefix="/api/content",
@@ -28,11 +29,14 @@ def generate_content(request: ContentRequest):
             platform=request.platform or "General"
         )
 
+        # Extract hashtags from Gemini response
+        hashtags = list(set(re.findall(r"#\w+", result)))
+
         return ContentResponse(
             success=True,
             message="Content generated successfully",
             generated_content=result,
-            hashtags=[]
+            hashtags=hashtags
         )
 
     except Exception as e:

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.schemas.content import ContentRequest
 from app.services.gemini_service import generate_content
+from app.routes.thumbnail_route import router as thumbnail_router
 
 router = APIRouter(prefix="/text", tags=["Text Generation"])
 
