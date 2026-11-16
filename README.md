@@ -131,7 +131,7 @@ Planned capabilities are not yet fully implemented.
 🏗️ System Architecture
 ## 🏗️ System Architecture
 
-![CreatorPilot AI System Architecture](assets/system-architecture.png)
+![CreatorPilot AI System Architecture](assets/system-architecture.jpeg)
 
 🛠️ Tech Stack
 
