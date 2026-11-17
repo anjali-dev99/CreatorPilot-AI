@@ -5,5 +5,6 @@ from typing import List
 class ContentResponse(BaseModel):
     success: bool
     message: str
+    title: str
     generated_content: str
     hashtags: List[str] = Field(default_factory=list)

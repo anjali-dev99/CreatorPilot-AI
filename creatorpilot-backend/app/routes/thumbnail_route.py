@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from app.services.gemini_service import GeminiService
+from app.services.groq_service import GroqService
 
 router = APIRouter(
     prefix="/api/thumbnail",
@@ -24,9 +24,9 @@ def generate_thumbnail(request: ThumbnailRequest):
         )
 
     try:
-        gemini = GeminiService()
+        groq = GroqService()
 
-        result = gemini.generate_thumbnail_ideas(
+        result = groq.generate_thumbnail_ideas(
             content=request.content,
             platform=request.platform,
             language=request.language

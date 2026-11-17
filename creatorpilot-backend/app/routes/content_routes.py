@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.schemas.content import ContentRequest
 from app.schemas.response import ContentResponse
-from app.services.gemini_service import GeminiService
+from app.services.groq_service import GroqService
 import re
 
 router = APIRouter(
@@ -20,22 +20,41 @@ def generate_content(request: ContentRequest):
         )
 
     try:
-        gemini = GeminiService()
+        groq = GroqService()
 
-        result = gemini.generate_content(
+        result = groq.generate_content(
             content=request.content,
             language=request.language,
             tone=request.tone,
             platform=request.platform or "General"
         )
 
-        # Extract hashtags from Gemini response
+        print("GROQ RAW RESPONSE")
+        print(result)
+        title_match=re.search(
+            r"TITLE:\s*(.*?)(?=\nCONTENT:|\Z)",
+            result,
+            re.IGNORECASE | re.DOTALL
+        )
+
+        title = title_match.group(1).strip() if title_match else ""
+
+        content_match= re.search(
+            r"CONTENT:\s*(.*?)(?=\nHASHTAGS:|\Z)",
+            result,
+            re.IGNORECASE | re.DOTALL
+
+        )
+
+        description = content_match.group(1).strip() if content_match else result
+        # Extract hashtags from groq response
         hashtags = list(set(re.findall(r"#\w+", result)))
 
         return ContentResponse(
             success=True,
             message="Content generated successfully",
-            generated_content=result,
+            title=title,
+            generated_content=description,
             hashtags=hashtags
         )
 
